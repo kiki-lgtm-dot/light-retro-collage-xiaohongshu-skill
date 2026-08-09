@@ -109,4 +109,4 @@ py -3 "$SkillDir\scripts\make_contact_sheet.py" output\topic\pages --output outp
 - `scripts/make_contact_sheet.py`: Create a visual-review sheet from rendered pages.
 - `scripts/self_test.py`: Render and validate the bundled six-page example in a temporary directory.
 
-Use `assets/style-reference/` and `assets/examples/light-retro-collage-case-contact-sheet.png` only as style, hierarchy, and density references. Do not copy their subjects or treat their existing objects as mandatory.
+Use `assets/examples/light-retro-collage-case-contact-sheet.png` only as a style, hierarchy, and density reference. Do not copy its subject or treat its existing objects as mandatory.

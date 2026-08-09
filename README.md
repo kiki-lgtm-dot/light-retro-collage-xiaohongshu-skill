@@ -61,10 +61,6 @@ Skill ID：`generate-light-retro-collage-xhs-notes`
   </tr>
 </table>
 
-### 无文字风格参考
-
-![轻复古拼贴风格参考](assets/style-reference/light-retro-collage-text-free.png)
-
 ## 下载与安装
 
 根据 [OpenAI 官方 Skill 文档](https://learn.chatgpt.com/docs/build-skills)，Codex 的用户级 Skill 目录为 `$HOME/.agents/skills`。Codex 通常会自动检测新增或更新后的 Skill；如果没有出现，请重启 Codex。
@@ -186,7 +182,6 @@ python3 scripts/self_test.py
 │   ├── examples/
 │   ├── layouts/
 │   ├── palettes/
-│   ├── style-reference/
 │   └── project-schema.json
 ├── references/
 ├── scripts/
