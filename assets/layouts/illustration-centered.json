@@ -1,0 +1,10 @@
+{
+  "canvas": [1080, 1440],
+  "title_box": [170, 175, 910, 320],
+  "top_text_box": [216, 345, 864, 455],
+  "illustration_box": [236, 500, 844, 892],
+  "bottom_text_box": [216, 950, 864, 1275],
+  "text_nontext_clearance_px": 36,
+  "title_stroke_px": 0,
+  "bottom_text_vertical_align": "adaptive_bottom"
+}

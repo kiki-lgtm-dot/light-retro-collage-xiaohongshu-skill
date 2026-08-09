@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "concept": "Agent Skill",
+  "resolved_scope": "ChatGPT 与 Codex 使用的 Agent Skill 开放工作流格式",
+  "audience": "对 AI 工具感兴趣的非技术读者",
+  "page_count": 6,
+  "confirmation": {
+    "confirmed_by_user": true,
+    "approved_page_count": 6,
+    "approved_layouts": ["text_centered", "illustration_centered"]
+  },
+  "titles": {
+    "recommended": "Skill是什么？给AI一份可复用的工作手册",
+    "alternatives": [
+      "别再重复教AI：一篇讲懂 Skill",
+      "Agent Skill如何把工作方法固定下来"
+    ]
+  },
+  "caption": "为什么同一件事，每次都要重新教 AI？Skill 会把说明、资料与可选脚本组织成可复用工作流，让重复任务更容易保持一致。这组图讲清它是什么、如何加载，以及去哪里看规范。使用第三方 Skill 前，记得检查来源、脚本与权限。#AI #Codex #Skill",
+  "corner_tags": {
+    "top_left": "2026",
+    "top_right": "KIKI",
+    "bottom_left": "AI"
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Build skills",
+      "url": "https://learn.chatgpt.com/docs/build-skills",
+      "publisher": "OpenAI",
+      "publisher_group": "OpenAI",
+      "published_at": null,
+      "accessed_at": "2026-08-08",
+      "source_type": "official-documentation"
+    },
+    {
+      "id": "S2",
+      "title": "Agent Skills Specification",
+      "url": "https://agentskills.io/specification",
+      "publisher": "Agent Skills",
+      "publisher_group": "Agent Skills",
+      "published_at": null,
+      "accessed_at": "2026-08-08",
+      "source_type": "open-standard"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Agent Skill 是打包说明、资源与可选脚本的可复用工作流格式。",
+      "core": true,
+      "source_ids": ["S1", "S2"]
+    },
+    {
+      "id": "C2",
+      "text": "Skill 将程序性知识与上下文组织成可重复使用的流程，而不是一个新模型。",
+      "core": true,
+      "source_ids": ["S1", "S2"]
+    },
+    {
+      "id": "C3",
+      "text": "Skill 目录至少包含 SKILL.md，并可包含 scripts、references 与 assets。",
+      "core": true,
+      "source_ids": ["S1", "S2"]
+    },
+    {
+      "id": "C4",
+      "text": "Skill 使用渐进加载：先暴露名称和简介，匹配任务后再读取完整 SKILL.md。",
+      "core": true,
+      "source_ids": ["S1", "S2"]
+    },
+    {
+      "id": "C5",
+      "text": "Codex CLI 或 IDE 扩展可用美元符号点名 Skill；ChatGPT 可用 @ 选择 Skill。",
+      "core": false,
+      "source_ids": ["S1"]
+    },
+    {
+      "id": "C6",
+      "text": "OpenAI 的 Skill 格式建立在开放的 Agent Skills 标准之上。",
+      "core": false,
+      "source_ids": ["S1"]
+    }
+  ],
+  "pages": [
+    {
+      "number": 1,
+      "kind": "cover",
+      "layout": "cover",
+      "keyword": "SKILL",
+      "title": "到底是什么？",
+      "body": "给 ChatGPT／Codex\n一套可按需调用的工作说明",
+      "claim_ids": ["C1"],
+      "illustration": "folder",
+      "keyword_tag": "技能"
+    },
+    {
+      "number": 2,
+      "kind": "inner",
+      "layout": "text_centered",
+      "eyebrow": "为什么需要",
+      "title": "为什么每次都要重教？",
+      "body": "比如每周做周报：先读数据、找异常，再按固定模板输出。只靠一次 Prompt，下周往往还得把这些要求重讲一遍。",
+      "claim_ids": ["C2"],
+      "illustration": "repeat",
+      "keyword_tag": "技能"
+    },
+    {
+      "number": 3,
+      "kind": "inner",
+      "layout": "text_centered",
+      "eyebrow": "一句话定义",
+      "title": "Skill 像一张流程卡",
+      "body": "核心是 SKILL.md，也可附脚本、资料和模板。它不是新模型，只把做事方法交代清楚。",
+      "claim_ids": ["C1", "C2", "C3"],
+      "illustration": "anatomy",
+      "keyword_tag": "技能"
+    },
+    {
+      "number": 4,
+      "kind": "inner",
+      "layout": "illustration_centered",
+      "eyebrow": "加载方式",
+      "title": "它怎么被用起来？",
+      "top_text": "你点名使用，或任务刚好符合描述，它才读取完整说明。",
+      "body": "以周报为例：读取数据 → 找异常 → 按模板输出。\n在 Codex CLI／IDE 中也可用 $ 点名。",
+      "claim_ids": ["C4", "C5"],
+      "illustration": "workflow",
+      "keyword_tag": "技能"
+    },
+    {
+      "number": 5,
+      "kind": "inner",
+      "layout": "illustration_centered",
+      "eyebrow": "价值边界",
+      "title": "什么值得做成 Skill？",
+      "top_text": "流程稳定、结果有标准，才值得做成 Skill。",
+      "body": "周报整理适合；只改一句标题，用普通 Prompt 更轻。\nSkill 固定的是做法，不保证答案次次相同。",
+      "claim_ids": ["C1", "C2"],
+      "illustration": "benefits",
+      "keyword_tag": "技能"
+    },
+    {
+      "number": 6,
+      "kind": "inner",
+      "layout": "text_centered",
+      "eyebrow": "继续了解",
+      "title": "去哪里看规范？",
+      "body": "先看 OpenAI 的 Build skills 文档，再看 Agent Skills 开放规范。安装或分享第三方 Skill 前，检查来源、脚本与权限。",
+      "claim_ids": ["C6"],
+      "illustration": "sources",
+      "keyword_tag": "技能"
+    }
+  ]
+}

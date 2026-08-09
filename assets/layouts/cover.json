@@ -1,0 +1,11 @@
+{
+  "canvas": [1080, 1440],
+  "keyword_box": [150, 180, 930, 355],
+  "title_box": [170, 385, 910, 515],
+  "body_box": [216, 550, 864, 700],
+  "illustration_box": [196, 793, 884, 1257],
+  "text_nontext_clearance_px": 36,
+  "title_stroke_px": 0,
+  "keyword_stroke_px": 0,
+  "body_vertical_align": "top"
+}

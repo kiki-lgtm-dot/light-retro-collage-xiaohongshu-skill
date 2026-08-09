@@ -1,0 +1,4 @@
+interface:
+  display_name: "轻复古拼贴风格笔记自动生成skill"
+  short_description: "选题、查证、撰文、配图并完成轻复古拼贴知识笔记质检"
+  default_prompt: "Use $generate-light-retro-collage-xhs-notes to analyze my source material, recommend a publishable angle, confirm the page plan, and create a fact-checked light-retro collage Xiaohongshu carousel."

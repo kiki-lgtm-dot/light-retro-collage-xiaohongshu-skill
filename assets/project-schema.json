@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Light Retro Collage Xiaohongshu Note Project",
+  "$comment": "The renderer additionally enforces cross-field rules that JSON Schema cannot express compactly: page_count equals pages.length, page numbers are sequential, all three titles are mutually distinct, IDs resolve, every claim is mapped, and core claims have independent evidence or an explicit limitation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "concept",
+    "resolved_scope",
+    "audience",
+    "page_count",
+    "confirmation",
+    "titles",
+    "caption",
+    "corner_tags",
+    "claims",
+    "sources",
+    "pages"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "concept": {"$ref": "#/$defs/nonEmptyString"},
+    "resolved_scope": {"$ref": "#/$defs/nonEmptyString"},
+    "audience": {"$ref": "#/$defs/nonEmptyString"},
+    "page_count": {"type": "integer", "minimum": 4, "maximum": 12},
+    "confirmation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["confirmed_by_user", "approved_page_count", "approved_layouts"],
+      "properties": {
+        "confirmed_by_user": {"const": true},
+        "approved_page_count": {"type": "integer", "minimum": 4, "maximum": 12},
+        "approved_layouts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"enum": ["text_centered", "illustration_centered"]}
+        }
+      }
+    },
+    "titles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recommended", "alternatives"],
+      "properties": {
+        "recommended": {"$ref": "#/$defs/nonEmptyString"},
+        "alternatives": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/nonEmptyString"}
+        }
+      }
+    },
+    "caption": {"$ref": "#/$defs/nonEmptyString"},
+    "corner_tags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["top_left", "top_right", "bottom_left"],
+      "properties": {
+        "top_left": {"$ref": "#/$defs/cornerLabel"},
+        "top_right": {"$ref": "#/$defs/cornerLabel"},
+        "bottom_left": {"$ref": "#/$defs/cornerLabel"}
+      }
+    },
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/claim"}
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 12,
+      "prefixItems": [{"$ref": "#/$defs/coverPage"}],
+      "items": {"$ref": "#/$defs/innerPage"}
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+    },
+    "keywordTag": {
+      "anyOf": [
+        {"type": "string", "pattern": "^[A-Za-z]{1,6}$"},
+        {"type": "string", "minLength": 1, "maxLength": 4, "pattern": "^\\S+$"}
+      ]
+    },
+    "cornerLabel": {
+      "anyOf": [
+        {"type": "string", "pattern": "^[A-Za-z0-9]{1,8}$"},
+        {"type": "string", "minLength": 1, "maxLength": 4, "pattern": "^\\S+$"}
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "url", "publisher", "publisher_group", "accessed_at", "source_type"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "title": {"$ref": "#/$defs/nonEmptyString"},
+        "url": {"type": "string", "pattern": "^https?://"},
+        "publisher": {"$ref": "#/$defs/nonEmptyString"},
+        "publisher_group": {"$ref": "#/$defs/nonEmptyString"},
+        "published_at": {"type": ["string", "null"]},
+        "accessed_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "source_type": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "text", "core", "source_ids"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "text": {"$ref": "#/$defs/nonEmptyString"},
+        "core": {"type": "boolean"},
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/identifier"}
+        },
+        "source_limitation": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    },
+    "pageBase": {
+      "type": "object",
+      "required": ["number", "kind", "layout", "title", "claim_ids", "illustration", "keyword_tag"],
+      "properties": {
+        "number": {"type": "integer", "minimum": 1},
+        "kind": {"enum": ["cover", "inner"]},
+        "layout": {"enum": ["cover", "text_centered", "illustration_centered"]},
+        "keyword": {"type": "string"},
+        "eyebrow": {"type": "string"},
+        "title": {"$ref": "#/$defs/nonEmptyString"},
+        "top_text": {"type": "string"},
+        "body": {"type": "string"},
+        "bullets": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}},
+        "claim_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/identifier"}
+        },
+        "illustration": {"$ref": "#/$defs/nonEmptyString"},
+        "keyword_tag": {"$ref": "#/$defs/keywordTag"}
+      }
+    },
+    "coverPage": {
+      "allOf": [
+        {"$ref": "#/$defs/pageBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["number", "kind", "layout", "keyword", "title", "claim_ids", "illustration", "keyword_tag"],
+          "properties": {
+            "number": {"const": 1},
+            "kind": {"const": "cover"},
+            "layout": {"const": "cover"},
+            "keyword": {"$ref": "#/$defs/nonEmptyString"},
+            "eyebrow": {"type": "string"},
+            "title": {"$ref": "#/$defs/nonEmptyString"},
+            "body": {"type": "string"},
+            "bullets": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}},
+            "claim_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}},
+            "illustration": {"$ref": "#/$defs/nonEmptyString"},
+            "keyword_tag": {"$ref": "#/$defs/keywordTag"}
+          }
+        }
+      ]
+    },
+    "innerPage": {
+      "oneOf": [
+        {"$ref": "#/$defs/textCenteredPage"},
+        {"$ref": "#/$defs/illustrationCenteredPage"}
+      ]
+    },
+    "textCenteredPage": {
+      "allOf": [
+        {"$ref": "#/$defs/pageBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["number", "kind", "layout", "title", "claim_ids", "illustration", "keyword_tag"],
+          "properties": {
+            "number": {"type": "integer", "minimum": 2},
+            "kind": {"const": "inner"},
+            "layout": {"const": "text_centered"},
+            "eyebrow": {"type": "string"},
+            "title": {"$ref": "#/$defs/nonEmptyString"},
+            "body": {"type": "string"},
+            "bullets": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}},
+            "claim_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}},
+            "illustration": {"$ref": "#/$defs/nonEmptyString"},
+            "keyword_tag": {"$ref": "#/$defs/keywordTag"}
+          }
+        }
+      ]
+    },
+    "illustrationCenteredPage": {
+      "allOf": [
+        {"$ref": "#/$defs/pageBase"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["number", "kind", "layout", "title", "claim_ids", "illustration", "keyword_tag"],
+          "properties": {
+            "number": {"type": "integer", "minimum": 2},
+            "kind": {"const": "inner"},
+            "layout": {"const": "illustration_centered"},
+            "eyebrow": {"type": "string"},
+            "title": {"$ref": "#/$defs/nonEmptyString"},
+            "top_text": {"type": "string"},
+            "body": {"type": "string"},
+            "bullets": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}},
+            "claim_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}},
+            "illustration": {"$ref": "#/$defs/nonEmptyString"},
+            "keyword_tag": {"$ref": "#/$defs/keywordTag"}
+          }
+        }
+      ]
+    }
+  }
+}
