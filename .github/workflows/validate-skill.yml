@@ -1,0 +1,58 @@
+name: Validate Skill
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Expand initial source package when present
+        id: expand
+        shell: bash
+        run: |
+          if [[ -f skill-package.zip ]]; then
+            unzip -o skill-package.zip
+            rm skill-package.zip
+            echo "expanded=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "expanded=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install validation dependencies
+        shell: bash
+        run: |
+          if [[ -f scripts/requirements.txt ]]; then
+            python -m pip install --disable-pip-version-check -r scripts/requirements.txt
+          fi
+
+      - name: Validate the Skill package
+        shell: bash
+        run: |
+          if [[ -f tests/test_contract.py ]]; then
+            python tests/test_contract.py
+            python scripts/self_test.py
+          fi
+
+      - name: Publish expanded sources
+        if: steps.expand.outputs.expanded == 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publish complete Skill source tree"
+          git push
